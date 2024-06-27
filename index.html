@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sticky Notes Application</title>
+    <style>
+        .highlight { background-color: yellow; }
+        .sticky-note {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        This is an example text. Click on any word to add a sticky note.
+    </div>
+
+    <script>
+        document.getElementById('content').addEventListener('click', function(event) {
+            if (event.target.tagName === 'SPAN') {
+                let note = prompt("Enter your note:");
+                if (note) {
+                    let sticky = document.createElement('div');
+                    sticky.className = 'sticky-note';
+                    sticky.innerText = note;
+                    sticky.style.top = (event.clientY + window.scrollY) + 'px';
+                    sticky.style.left = (event.clientX + window.scrollX) + 'px';
+                    document.body.appendChild(sticky);
+                }
+            }
+        });
+
+        // Wrap words in span
+        let content = document.getElementById('content');
+        content.innerHTML = content.innerText.split(' ').map(word => `<span class="highlight">${word}</span>`).join(' ');
+    </script>
+</body>
+</html>
